@@ -30,7 +30,7 @@ const schema = new Schema ({
         type: String, 
         required: true, 
         trim: true, 
-        maxlength: 50,
+        maxlength: 150,
         minlength: 1,
     }, 
     email:{ 
@@ -48,6 +48,14 @@ const schema = new Schema ({
         minlength: 1,
         
     }, 
+    avatar: {
+        type: String, 
+        required: false, 
+        trim: true, 
+        maxlength: 300,
+        minlength: 1,
+
+    },
 
 })
 

@@ -6,7 +6,7 @@ const router = express.Router();
 
 //users
 router.get("/", async (request, response,next) => {
-  const users=[];
+  
   const {limit}= request.query; 
 
   try{
@@ -25,14 +25,14 @@ router.get("/", async (request, response,next) => {
 // users por id 
 
 router.get ("/:id", async(request, response, next)=>{
-  const {id}=request.params;
+  const {userName}=request.params;
 
   try { 
-    const userId= await user.getById(id);
+    const name= await users.getByUserName(userName);
     response.json({
       ok:true, 
       message: "Done!",
-      payload: {userId}, 
+      payload: {name}, 
     });
   }catch (error){ 
     next (error); 
@@ -44,7 +44,7 @@ router.get ("/:id", async(request, response, next)=>{
 router.post ("/", async (request, response, next)=> {
   try { 
     const userData= request.body; 
-    const userCreated= await user.create(userData);
+    const userCreated= await users.create(userData);
 
     response.status(201).json({ 
       ok:true,
@@ -57,5 +57,27 @@ router.post ("/", async (request, response, next)=> {
   }
 }); 
  
+
+router.patch("/:id", async (request, response, next)=> {
+  try {
+    const {id}= request.params;
+    const userData= request.body;
+    const userUpdate= await users.update(id, userData); 
+    response.json({
+      ok:true,
+      message: "User updated successfully",
+      payload:{
+        user: userUpdate,
+      }
+    })
+  }catch (error){
+    next (error);
+  }
+});
+
+
+
+
+
 
 module.exports= router
